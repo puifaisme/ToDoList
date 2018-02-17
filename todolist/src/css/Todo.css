@@ -1,0 +1,39 @@
+.flex-container {
+    display: flex;
+    justify-content: flex-start;
+    background-color: cadetblue;
+  }
+.flex-container > div {
+    background-color: #423e3e;
+    width: 32%;
+    margin: 10px;
+    text-align: left;
+    font-size: 30%;
+    color: #f1f1f1;
+  }
+  .WhiteBox {
+    background-color: #f1f1f1;
+    font-size: 15px;
+    color: black;
+    margin: 2%;
+}
+.pic-size {
+    width: 2%;
+    height: auto;
+    padding-left: 3%;
+}
+.pic1-size {
+    width: 5%;
+    height: auto;
+    padding-left: 3%;
+}
+.bg-color {
+    background-color: bisque ;
+}
+.center {
+    text-align: center;
+    color: #423e3e;
+    font-size: 400%;
+    margin-top: 10%;
+    font-weight: bold;
+}
