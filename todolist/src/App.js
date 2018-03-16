@@ -1,67 +1,74 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './css/Todo.css';
-import add from './img/sort-down.png'
-import plus from './img/plus.png'
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-  } from 'react-router-dom'
+import React, { Component } from "react";
+import "./css/Todo.css";
+import addCard from "./component/Addcard";
 
 class App extends Component {
+  state = {
+    todo: [],
+    todoText: "",
+    doing: [],
+    done: [],
+    number: 0,
+    delete: false,
+    cardD: []
+  };
+
+  handleInput = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  moveTodoToDoing = () => {
+    this.setState({
+      doing: this.state.doing.concat([this.state.todoText]),
+      number: this.state.number - 1,
+      delete: true
+    });
+  };
+
+  increateTodo = () => {
+    this.setState({
+      number: this.state.number + 1,
+      delete: false
+    });
+  };
+
   render() {
+    var card = [];
+
+    for (var i = 0; i < this.state.number; i++) {
+      card.push(
+        <ul style={{ display: this.state.delete ? "none" : "block" }}>
+          <input name="todoText" type="text" onChange={this.handleInput} />
+          <button onClick={this.moveTodoToDoing}>To Doing</button>
+        </ul>
+      );
+    }
+
     return (
-      <div class="center"> TODOLIST 
-      <Router>
-      <div class="flex-container">
-        <div>Todo
-          <div class="WhiteBox"> Learning create Function
-            <button><img className="pic-size" src={add} /></button>
+      <div class="center">
+        TODOLIST
+        <div class="flex-container">
+          <div>
+            Todo
+            <br />
+            {this.state.todo.map(item => <li>{item}</li>)}
+            {card}
+            <button class="WhiteBox" onClick={this.increateTodo}>
+              add card...
+            </button>
           </div>
-          <div class="WhiteBox" > Create Input List 
-            <button><img className="pic-size" src={add} /></button>
+          <div>
+            Doing
+            <br />
+            {this.state.doing.map(item => <li>{item}</li>)}
           </div>
-          <div class="WhiteBox"> Learning DB
-            <button><img className="pic-size" src={add} /></button>
+          <div>
+            Done
+            <br />
           </div>
-          <Link to="/Addtodo"><button class="WhiteBox"> add card...</button></Link>        
         </div>
-        <div>Doing
-          <div class="WhiteBox">Create Function
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox" > Learning create Button 
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox"> Create Button Add list
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <Link to="/Addtodo"><button class="WhiteBox"> add card...</button></Link>
-        </div>
-        <div>Done
-          <div class="WhiteBox">Learning Create Input
-            <button ><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox" >Create Input Todolist Component 
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox"> Create knex.js
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox">Connect react native X DB
-            <button><img className="pic-size" src={add} /></button>
-          </div>
-          <div class="WhiteBox">Create Header Text Component
-            <button><img className="pic-size" src={add} /></button>
-          </div>   
-          <Link to="/Addtodo"><button class="WhiteBox"> add card...</button></Link>  
-        </div>  
-        <div>Add 
-          <div><button class="WhiteBox"><img className="pic1-size" src={plus}/></button> </div>
-        </div>
-      </div>
-      </Router>
       </div>
     );
   }
