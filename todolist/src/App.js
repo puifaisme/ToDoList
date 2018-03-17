@@ -5,7 +5,7 @@ import addCard from "./component/Addcard";
 class App extends Component {
   state = {
     todo: [],
-    todoText: "",
+    todoText: [],
     doing: [],
     done: [],
     number: 0,
@@ -19,11 +19,15 @@ class App extends Component {
     });
   };
 
+  handleClick = clicked => {
+    this.setState({ clicked: true });
+  };
+
   moveTodoToDoing = () => {
     this.setState({
       doing: this.state.doing.concat([this.state.todoText]),
       number: this.state.number - 1,
-      delete: true
+      todoText: this.state.doing.splice(0, 1)
     });
   };
 
@@ -58,6 +62,7 @@ class App extends Component {
             <button class="WhiteBox" onClick={this.increateTodo}>
               add card...
             </button>
+            <addCard />
           </div>
           <div>
             Doing
