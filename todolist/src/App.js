@@ -5,73 +5,81 @@ import addCard from "./component/Addcard";
 class App extends Component {
   state = {
     todo: [],
-    todoText: [],
+    todoText: "",
     doing: [],
     done: [],
-    number: 0,
-    delete: false,
-    cardD: []
+    number: 0
   };
 
   handleInput = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      todoText: [event.target.value]
     });
   };
 
-  handleClick = clicked => {
-    this.setState({ clicked: true });
+  delete = key => {
+    this.props.delete(key);
   };
 
-  moveTodoToDoing = () => {
+  AddtoDo = e => {
+    let newItem = {
+      text: e.target.value,
+      key: number + 1
+    };
     this.setState({
-      doing: this.state.doing.concat([this.state.todoText]),
-      number: this.state.number - 1,
-      todoText: this.state.doing.splice(0, 1)
+      todo: this.state.todo.concat(newItem)
     });
   };
 
-  increateTodo = () => {
+  moveTodoToDoing = e => {
     this.setState({
-      number: this.state.number + 1,
-      delete: false
+      doing: this.state.doing.concat([])
+    });
+
+    this.delete();
+  };
+
+  moveDoingToDone = e => {
+    this.setState({
+      done: this.state.done.concat([this.state.todoText])
     });
   };
 
   render() {
-    var card = [];
-
-    for (var i = 0; i < this.state.number; i++) {
-      card.push(
-        <ul style={{ display: this.state.delete ? "none" : "block" }}>
-          <input name="todoText" type="text" onChange={this.handleInput} />
-          <button onClick={this.moveTodoToDoing}>To Doing</button>
-        </ul>
-      );
-    }
-
     return (
-      <div class="center">
+      <div className="center">
         TODOLIST
-        <div class="flex-container">
+        <div className="flex-container">
           <div>
             Todo
             <br />
-            {this.state.todo.map(item => <li>{item}</li>)}
-            {card}
-            <button class="WhiteBox" onClick={this.increateTodo}>
-              add card...
-            </button>
-            <addCard />
+            {this.state.todo.map(item => (
+              <li key={item.key}>
+                {item.text}
+                <button onClick={this.moveTodoToDoing}>Doing</button>
+              </li>
+            ))}
+            <input
+              value={this.state.todoText}
+              type="text"
+              onChange={this.handleInput}
+            />
+            <button onClick={this.ToDo}>OK</button>
           </div>
           <div>
             Doing
             <br />
-            {this.state.doing.map(item => <li>{item}</li>)}
+            {this.state.doing.map(item => (
+              <li>
+                {item}
+                <button onClick={this.moveDoingToDone}>Done</button>
+              </li>
+            ))}
           </div>
           <div>
             Done
             <br />
+            {this.state.done.map(item => <li>{item}</li>)}
           </div>
         </div>
       </div>
